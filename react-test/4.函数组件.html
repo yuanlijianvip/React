@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div id="root">
+     
+  </div>
+
+
+  <!-- 用于编译jsx -->
+  <script src="./js/browser.min.js"></script>
+  <!-- react核心库 -->
+  <script src="./js/react.development.js"></script>
+  <!-- 用于渲染组件的 依赖react.js -->
+  <script src="./js/react-dom.development.js"></script>
+
+  <script type='text/babel'>
+    //组件名称首字母必须大写，否则会认为是普通的HTML标签
+    // function Qmcom() {
+    //   return <h1>hello world</h1>
+    // }
+
+    //通过props参数来接收给组件的传值
+    function Qmcom(props){
+      console.log(props);
+      return (
+        <div>
+          <h1>hello world</h1>
+          <label htmlFor="name">姓名</label>
+          <input type="text" id="name"/>
+          <span>{props.name}</span>
+        </div>
+      )
+    }
+    ReactDOM.render(<Qmcom name="qm" age={18}></Qmcom>,
+      document.getElementById('root')
+    )
+  </script> 
+</body>
+</html>
