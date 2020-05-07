@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div id="root">
+     
+  </div>
+
+
+  <!-- 用于编译jsx -->
+  <script src="./js/browser.min.js"></script>
+  <!-- react核心库 -->
+  <script src="./js/react.development.js"></script>
+  <!-- 用于渲染组件的 依赖react.js -->
+  <script src="./js/react-dom.development.js"></script>
+
+  <script type='text/babel'>
+    //组件重新渲染的方法
+    //setState() 修改组件的状态
+    //props有变化
+    //this.forceUpdate()
+    class Com extends React.Component{
+      constructor(params){
+        super(params)
+
+        this.state = {
+          qq: 1
+        }
+
+        this.add = this.add.bind(this);
+        this.number = 0;
+      }
+      
+      add() {
+        this.number++;
+        // this.state.qq++
+        // this.setState({
+        //   qq: this.state.qq+1
+        // })
+        console.log(this.number);
+        //强制渲染
+        this.forceUpdate();
+      }
+      render () {
+        console.log('render');
+        return (
+          <div>
+          <button onClick={this.add}>click +1</button>
+            <p>qq:{this.state.qq}</p>
+
+            <p>number: {this.number}</p>
+
+            <p>num: {this.props.num}</p>
+          </div>
+        )
+      }
+    }
+    
+
+    class Parent extends React.Component{
+      constructor(params) {
+        super(params)
+        this.state = {
+          number: 0
+        }
+      }
+
+      change() {
+        this.setState({
+          number: this.state.number+1
+        })
+      }
+      render() {
+        return (
+          <div>
+          <button onClick={this.change.bind(this)}>change number</button>
+            <Com num={this.state.number}/>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<Parent/>, document.getElementById('root'));
+  </script> 
+</body>
+</html>
