@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div id="root">
+     
+  </div>
+
+
+  <!-- 用于编译jsx -->
+  <script src="./js/browser.min.js"></script>
+  <!-- react核心库 -->
+  <script src="./js/react.development.js"></script>
+  <!-- 用于渲染组件的 依赖react.js -->
+  <script src="./js/react-dom.development.js"></script>
+
+
+  <!--
+    react条件判断可以使用if判断 或者三目运算符
+  -->
+  <script type='text/babel'>
+    function LoginTpl(props) {
+      if (props.isLogin) {
+        return <h1>欢迎欢迎!</h1>
+      } else {
+        // return <h1>请登录!</h1>
+        return null
+      }
+    }
+
+
+    class Com extends React.Component{
+      constructor(params){
+        super(params)
+
+        this.state = {
+          isLogin: false
+        }
+      }
+
+      change() {
+        this.setState({
+          isLogin: !this.state.isLogin
+        })
+      }
+
+      render () {
+        return (
+          <div>
+            <button onClick={this.change.bind(this)}>切换登录状态</button>
+            <LoginTpl isLogin={this.state.isLogin}/>
+          </div>
+        )
+      }
+      // render() {
+      //   let tpl;
+      //   if (this.state.isLogin) {
+      //     tpl = <h1>欢迎欢迎</h1>
+      //   } else {
+      //     tpl = <h1>请登录</h1>
+      //   }
+
+      //   return (
+      //     <div>
+      //     <button onClick={this.change.bind(this)}>切换登录状态</button>
+      //       { tpl }
+      //      {
+      //        this.state.isLogin ? <h1>欢迎欢迎</h1> : <h1>请登录</h1>
+      //      }
+      //     </div>
+      //   )
+      // }
+    }
+    
+    ReactDOM.render(<Com/>, document.getElementById('root'));
+  </script> 
+</body>
+</html>
