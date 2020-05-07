@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div id="root">
+     
+  </div>
+
+
+  <!-- 用于编译jsx -->
+  <script src="./js/browser.min.js"></script>
+  <!-- react核心库 -->
+  <script src="./js/react.development.js"></script>
+  <!-- 用于渲染组件的 依赖react.js -->
+  <script src="./js/react-dom.development.js"></script>
+
+  <script type='text/babel'>
+    // jsx需要使用{}包裹表达式
+    // 添加样式 style={{}} 第一个大括号表示一个表达式，第二个表达式表示一个对象
+
+    let oDiv = document.getElementById('root');
+    let name = 'xingmeng';
+    let a=1;
+    let b=2;
+    
+    let _style={
+      background: 'red',
+      color: 'white'
+    }
+    ReactDOM.render(
+      <div>
+        <h1 style={_style}>hello world</h1>
+        <h1 style={{color: 'blue'}}>hello world</h1>
+        <h2>hello {name}</h2>
+        <span>num = {a+b}</span>
+      </div>
+    , oDiv);
+  </script>
+</body>
+</html>
