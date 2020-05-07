@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div id="root">
+     
+  </div>
+
+
+  <!-- 用于编译jsx -->
+  <script src="./js/browser.min.js"></script>
+  <!-- react核心库 -->
+  <script src="./js/react.development.js"></script>
+  <!-- 用于渲染组件的 依赖react.js -->
+  <script src="./js/react-dom.development.js"></script>
+
+  <script type='text/babel'>
+    //ref: 给需要引用的组件或者是元素起一个名字 但是ref的值不允许是重复的
+    //refs: 父组件中引用的所有的ref组件
+    class Parent extends React.Component{
+      //做状态初始化的
+      constructor(params) {
+        super(params)
+
+        this.state = {
+          number: 0
+        }
+
+        this.addFun = this.addFun.bind(this);
+      }
+
+      addFun(){
+        this.setState({
+          number: this.state.number+1
+        })
+      }
+      render() {
+        return (
+          <div>
+            <h1>父组件</h1>
+            <p>number: {this.state.number}</p>
+            <Child parent={this} addFn = {this.addFun}/>
+          </div>
+        )
+      }
+    }
+
+    class Child extends React.Component{
+      //做状态初始化的
+      constructor(params) {
+        super(params)
+
+      }
+
+      add() {
+        const parent = this.props.parent;
+        //虽然生效，非常不建议使用
+        // parent.setState({
+        //   number: parent.state.number+1
+        // })
+
+        // parent.addFun();
+
+          this.props.addFn();
+      }
+      render() {
+        return (
+          <div>
+            <h4>子组件</h4>
+            <button onClick={this.add.bind(this)}>点击后父组件number+1</button>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Parent/>,
+      document.getElementById('root')
+    )
+
+    // 非父子关系
+    // 同一页面 公共属性或者共同父组件做中转
+    // 非同一页面 localStroage 服务器 做中转
+    // redux
+    
+  </script> 
+</body>
+</html>
