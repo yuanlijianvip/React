@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div id="root">
+     
+  </div>
+
+
+  <!-- 用于编译jsx -->
+  <script src="./js/browser.min.js"></script>
+  <!-- react核心库 -->
+  <script src="./js/react.development.js"></script>
+  <!-- 用于渲染组件的 依赖react.js -->
+  <script src="./js/react-dom.development.js"></script>
+
+  <script type='text/babel'>
+    //1.事件命名需要采用小驼峰式，不能是纯小写 onclick => onClick onblur => onBlur
+    //2.使用JSX语法时需要传入一个函数作为事件的处理函数而不能是一个字符串
+    //3.props是只读的不可修改
+    //4.state状态是可以修改的 但是需要使用this.setState()进行修改
+    //5.如果需要阻止浏览器的默认行为需要使用preventDefault()方法，而不能使用return false
+
+    class Qmcom extends React.Component{
+      //做状态初始化的
+      constructor(params) {
+        super(params)
+
+        this.state = {
+          number: 0
+        }
+
+        this.changeNumber = this.changeNumber.bind(this);
+      }
+
+      fun() {
+        alert('hello')
+      }
+      add() {
+        // props是只读的，不能修改
+        this.props.num++;
+      }
+
+      changeNumber() {
+        console.log(this.state.number);
+        // this.state.number++;
+        console.log(this.state.number);
+        this.setState({
+          number: this.state.number+1
+        })
+      }
+
+      jump(e) {
+        e.preventDefault();
+        alert("百度")
+        // return false;
+      }
+
+      //通过this.props来接收给组件传的值
+      render() {
+        console.log(this.props);
+        return (
+          <div>
+            <h1>hello {this.props.name}</h1>
+            <p>姓名: {this.props.name}</p>
+            <p>年龄: {this.props.age}</p>
+            <button onClick={this.fun}>点击按钮</button>
+            <br/>
+            <span>num: {this.props.num}</span>
+            <button onClick={this.add.bind(this)}>click +1</button>
+            <br/>
+            <span>number: {this.state.number}</span>
+            <button onClick={this.changeNumber}>click +1</button>
+            <a href="https://www.baidu.com" onClick={this.jump}>百度</a>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Qmcom num={10}/>,
+      document.getElementById('root')
+    )
+  </script> 
+</body>
+</html>
