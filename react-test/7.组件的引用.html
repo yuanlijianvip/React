@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div id="root">
+     
+  </div>
+
+
+  <!-- 用于编译jsx -->
+  <script src="./js/browser.min.js"></script>
+  <!-- react核心库 -->
+  <script src="./js/react.development.js"></script>
+  <!-- 用于渲染组件的 依赖react.js -->
+  <script src="./js/react-dom.development.js"></script>
+
+  <script type='text/babel'>
+    //ref: 给需要引用的组件或者是元素起一个名字 但是ref的值不允许是重复的
+    //refs: 父组件中引用的所有的ref组件
+    class Parent extends React.Component{
+      //做状态初始化的
+      constructor(params) {
+        super(params)
+
+        this.add = this.add.bind(this);
+      }
+      add() {
+        // this.refs返回的是一个object
+        console.log(this.refs);
+
+        let n = this.refs.text.value;
+        //虽然可以实现，但是不建议使用
+        // this.refs.childTpl.setState({
+        //   number: this.refs.childTpl.state.number+1
+        // })
+
+        this.refs.childTpl.addFun(n)
+      }
+      render() {
+        return (
+          <div>
+            <h1>父组件</h1>
+            <input ref="text" type="text"/>
+            <button onClick={this.add}>点击后子组件number+1</button>
+            <Child ref="childTpl"/>
+          </div>
+        )
+      }
+    }
+
+    class Child extends React.Component{
+      //做状态初始化的
+      constructor(params) {
+        super(params)
+
+        this.state = {
+          number: 0
+        }
+
+        this.addFun = this.addFun.bind(this)
+      }
+      addFun(num) {
+        this.setState({
+          number: this.state.number+num*1
+        })
+      }
+      render() {
+        return (
+          <div>
+            <h4>子组件</h4>
+            <p>number: {this.state.number}</p>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Parent num={10}/>,
+      document.getElementById('root')
+    )
+  </script> 
+</body>
+</html>
