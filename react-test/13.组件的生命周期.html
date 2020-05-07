@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- 用于编译jsx -->
+  <script src="./js/browser.min.js"></script>
+  <!-- react核心库 -->
+  <script src="./js/react.development.js"></script>
+  <!-- 用于渲染组件的 依赖react.js -->
+  <script src="./js/react-dom.development.js"></script>
+
+  <script type="text/babel">
+    class Main extends React.Component{
+      constructor(params) {
+        super(params)
+
+        this.state = {
+          isShow: false
+        }
+
+        this.getcode = this.getcode.bind(this)
+      }
+
+
+      getcode() {
+        this.setState({
+          isShow: !this.state.isShow
+        })
+      }
+      render() {
+        return (
+          <div>
+            <button onClick={this.getcode}>点击获取验证码</button>
+            {
+              this.state.isShow ? <Clock stop={this.getcode}/> : null
+            }
+          </div>
+        )
+      }
+    }
+
+    class Clock extends React.Component{
+      constructor(params) {
+        super(params)
+
+        this.state = {
+          num: 6
+        }
+      }
+
+      componentDidMount() {
+        console.log('didMount')
+        this.timer = setInterval(()=> {
+          this.setState({
+            num: this.state.num-1
+          })
+        }, 1000);
+      }
+
+      shouldComponentUpdate(nextprops, nextState){
+        console.log(nextState)
+
+        if (nextState.num <=0) {
+          this.props.stop();
+          return false
+        } else {
+          return true
+        }
+      }
+
+      componentDidUpdate() {
+        console.log('didUpdate');
+      }
+
+      componentWillUnmount(){
+        clearInterval(this.timer)
+      }
+
+      render() {
+        return (
+          <div>
+            {this.state.num}秒后重新获取验证码
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Main/>, document.getElementById('root'))
+  </script>
+</body>
+</html>
