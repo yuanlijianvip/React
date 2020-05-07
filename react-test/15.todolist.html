@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .active {
+        background-color: red;
+      }
+    </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="./js/react.development.js"></script>
+  <script src="./js/react-dom.development.js"></script>
+  <script src="./js/browser.min.js"></script>
+
+  <script type="text/babel">
+    class Search extends React.Component{
+      constructor(params){
+        super(params)
+
+        this.change = this.change.bind(this)
+      }
+
+      change(event){
+        // console.log(event.target.value)
+        this.props.searchList(event.target.value)
+      }
+
+      render(){
+        return(
+          <div>
+            <label htmlFor="search">搜索</label>
+            <input id="search" type="text" onChange={this.change}/>
+          </div>
+        )
+      }
+    }
+
+    class Add extends React.Component{
+      constructor(params){
+        super(params)
+
+        this.add = this.add.bind(this);
+      }
+
+      add() {
+        if (this.refs.addInput.value) {
+          this.props.addList(this.refs.addInput.value);
+          this.refs.addInput.value = '';
+        }
+      }
+
+      render(){
+        return(
+          <div>
+            <label htmlFor="add">添加</label>
+            <input id="add" type="text" ref="addInput"/>
+            <button onClick={this.add}>add</button>
+          </div>
+        )
+      }
+    }
+
+    class List extends React.Component{
+      constructor(params){
+        super(params)
+      }
+
+      del(index) {
+        this.props.delList(index)
+      }
+
+      render(){
+        return(
+          <div>
+            <ul>
+              {
+                this.props.todos.map((item, index) => (
+                  <li key={item.id} className={item.isActive ? 'active' : ''}>
+                    <input type="checkbox" defaultChecked={item.isActive} onChange={
+                      ()=>{
+                        // this.props.changeList(index)
+                        this.props.changeList(item.id)
+                      }
+                    }/>
+                    <span>{item.name}</span>
+                    {
+                      //<button onClick={this.del.bind(this, index)}>del</button>
+                    }
+                    <button onClick={this.del.bind(this, item.id)}>del</button>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        )
+      }
+    }
+
+    class Main extends React.Component{
+      constructor(params){
+        super(params)
+
+        // this.state = {
+        //   todos: ['吃饭', '睡觉', '打豆豆']
+        // }
+
+        this.state = {
+          todos: [
+            {
+              id: 1,
+              name: '吃饭',
+              isActive: false
+            },
+            {
+              id: 2,
+              name: '睡觉',
+              isActive: false
+            },
+            {
+              id: 3,
+              name: '打豆豆',
+              isActive: false
+            }
+          ],
+          showlist: [
+            {
+              id: 1,
+              name: '吃饭',
+              isActive: false
+            },
+            {
+              id: 2,
+              name: '睡觉',
+              isActive: false
+            },
+            {
+              id: 3,
+              name: '打豆豆',
+              isActive: false
+            }
+          ]
+        }
+
+        this.addList = this.addList.bind(this)
+        this.delList = this.delList.bind(this)
+        this.changeList = this.changeList.bind(this)
+        this.searchList = this.searchList.bind(this)
+      }
+
+      addList(value) {
+        let todos = [...this.state.todos]
+        // todos.push(value)
+
+        todos.push({
+          id: new Date().getTime(),
+          name: value,
+          isActive: false
+        })
+        this.setState({
+          todos,
+          showlist: todos
+        })
+      }
+
+      delList(index){
+        // let todos = [...this.state.todos]
+        // todos.splice(index, 1)
+
+        let todos = this.state.todos.filter(item => {
+          return item.id != index
+        })
+        this.setState({
+          todos,
+          showlist: todos
+        })
+      }
+
+      changeList(index) {
+        // let todos = [...this.state.todos]
+        // todos[index].isActive = !todos[index].isActive
+        let todos = [...this.state.todos]
+        todos.forEach(item => {
+          if (item.id == index) {
+            item.isActive = !item.isActive
+          }
+        })
+        this.setState({
+          todos,
+          showlist: todos
+        })
+      } 
+
+      searchList(value) {
+        let todos = this.state.todos.filter(item => {
+          return item.name.includes(value)
+        })
+
+        this.setState({
+          showlist: todos
+        })
+      }
+
+      render(){
+        return(
+          <div>
+            <h1>TodoList</h1>
+            <Search searchList={this.searchList}/>
+            <Add addList={this.addList}/>
+            <List changeList={this.changeList} todos={this.state.showlist} delList={this.delList}/>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Main/>, document.getElementById('root'))
+  </script>
+</body>
+</html>
