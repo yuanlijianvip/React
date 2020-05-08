@@ -1,0 +1,18 @@
+{
+    "errno": 0,
+    "errmsg": "success",
+    "data": [
+        {
+            "id": 18,
+            "title": "js课程"
+        },
+        {
+            "id": 25,
+            "title": "vue课程"
+        },
+        {
+            "id": 27,
+            "title": "react课程"
+        }
+    ]
+}

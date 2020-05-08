@@ -1,0 +1,10 @@
+{
+    "errno": 0,
+    "errmsg": "success",
+    "data": {
+        "id": 27,
+        "title": "react课程",
+        "teacher": "zs",
+        "intro": "学好react，迎娶白富美，走上人生巅峰"
+    }
+}

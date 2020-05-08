@@ -1,0 +1,10 @@
+{
+    "errno": 0,
+    "errmsg": "success",
+    "data": {
+        "id": 18,
+        "title": "js课程",
+        "teacher": "ls",
+        "intro": "学好js，迎娶白富美，走上人生巅峰"
+    }
+}

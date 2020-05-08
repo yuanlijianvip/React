@@ -1,0 +1,10 @@
+{
+    "errno": 0,
+    "errmsg": "success",
+    "data": {
+        "id": 25,
+        "title": "vue课程",
+        "teacher": "ww",
+        "intro": "学好vue，迎娶白富美，走上人生巅峰"
+    }
+}
