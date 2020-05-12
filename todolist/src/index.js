@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+//all in js
+import TodoList from './TodoList'
+//PWA  progressive web application
+//https协议的服务器上
 import * as serviceWorker from './serviceWorker';
-
+//JSX
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <TodoList />
   </React.StrictMode>,
   document.getElementById('root')
 );
