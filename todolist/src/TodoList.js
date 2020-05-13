@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import './style.css';
 import TodoItem from './TodoItem';
+import './style.css';
 
 class TodoList extends Component {
     constructor(props) {
@@ -9,6 +9,9 @@ class TodoList extends Component {
             inputValue: '',
             list: []
         }
+        this.handelInputChange = this.handelInputChange.bind(this);
+        this.handelBtnClick = this.handelBtnClick.bind(this);
+        this.handelItemDelete = this.handelItemDelete.bind(this);
     }
 
     render() {
@@ -21,48 +24,93 @@ class TodoList extends Component {
                         id="insertArea"
                         className='input'
                         value={this.state.inputValue}
-                        onChange={this.handelInputChange.bind(this)}
+                        onChange={this.handelInputChange}
                     />
-                    <button onClick={this.handelBtnClick.bind(this)}>提交</button>
+                    <button onClick={this.handelBtnClick}>提交</button>
                 </div>
                 <ul>
-                    {
+                    { this.getTodoItem() }
+                    {/* {
                         this.state.list.map((item, index) => {
                         return (
                             <div>
                                 <TodoItem 
                                     content={item} 
                                     index={index}
-                                    deleteItem = {this.handelItemDelete.bind(this)}
+                                    deleteItem = {this.handelItemDelete}
                                 />
                             </div>
                             )
                         })
-                    }
+                    } */}
                 </ul>
             </Fragment>
         )
     }
 
+    getTodoItem() {
+        return this.state.list.map((item, index) => {
+            return (
+                <div key={index}>
+                    {/* key值不能用index，待修改 */}
+                    <TodoItem 
+                        content={item} 
+                        index={index}
+                        deleteItem = {this.handelItemDelete}
+                    />
+                </div>
+                )
+            }
+        )
+    }
+
     handelInputChange(e) {
-        this.setState({
-            inputValue: e.target.value
-        })
+        const value = e.target.value;
+
+        this.setState(() => ({
+            inputValue: value
+        }))
+
+        // this.setState(() => {
+        //     return {
+        //         inputValue: value
+        //     }
+        // })
+
+        // this.setState({
+        //     inputValue: e.target.value
+        // })
     }
     handelBtnClick() {
-        this.setState({
-            list: [...this.state.list, this.state.inputValue],
+        
+        this.setState((prevState) => ({
+            list: [...prevState.list, prevState.inputValue],
             inputValue: ''
-        })
+        }))
+
+        // this.setState(() => ({
+        //     list: [...this.state.list, this.state.inputValue],
+        //     inputValue: ''
+        // }))
+
+        // this.setState({
+        //     list: [...this.state.list, this.state.inputValue],
+        //     inputValue: ''
+        // })
     }
     handelItemDelete(index) {
         // immutable 
         // state不允许做任何的改变
-        const list = [...this.state.list];
-        list.splice(index, 1);
-        this.setState({
-            list
+        this.setState((prevState) => {
+            const list = [...prevState.list];
+            list.splice(index, 1);
+            return {list}
         })
+        // const list = [...this.state.list];
+        // list.splice(index, 1);
+        // this.setState({
+        //     list
+        // })
     }
 }
 
