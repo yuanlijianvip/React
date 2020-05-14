@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
-import { Input, Button, List, Typography } from 'antd';
+import { Input, Button, List } from 'antd';
 import store from './store';
 
 class TodoList extends Component {
@@ -29,9 +29,9 @@ class TodoList extends Component {
                     style={{marginTop: '10px', width: '300px'}}
                     bordered
                     dataSource={this.state.list}
-                    renderItem={item => (
-                        <List.Item>
-                        <Typography.Text mark>[ITEM]</Typography.Text> {item}
+                    renderItem={(item, index) => (
+                        <List.Item onClick={this.handelItemDelete.bind(this, index)}>
+                            {item}
                         </List.Item>
                     )}
                 />
@@ -58,6 +58,15 @@ class TodoList extends Component {
         }
 
         store.dispatch(action);
+    }
+
+    handelItemDelete(index) {
+       const action = {
+           type: 'delete_todo_item',
+           index
+       }
+
+       store.dispatch(action);
     }
 }
 
