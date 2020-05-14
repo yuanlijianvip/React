@@ -7,7 +7,16 @@ class TodoItem extends Component {
         this.handelClick = this.handelClick.bind(this);
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.content !== this.props.content) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     render() {
+        console.log('child render');
         const { content } = this.props
         return (
             <div onClick={this.handelClick}>
