@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 //all in js
 import TodoList from './TodoList'
+// import App from './App1'
+// import App from './App'
 //PWA  progressive web application
 //https协议的服务器上
 import * as serviceWorker from './serviceWorker';
