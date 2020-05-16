@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import store from './store';
-import { getTodoList, getInputChangeAction, getAddItemAction, getDeleteItemAction } from './store/actionCreators'
+import { getInitList, getInputChangeAction, getAddItemAction, getDeleteItemAction } from './store/actionCreators'
 import TodoListUI from './TodoListUI';
+import axios from 'axios';
 
 class TodoList extends Component {
     constructor(props) {
@@ -49,8 +50,14 @@ class TodoList extends Component {
     }
 
     componentDidMount() {
-        const action = getTodoList();
+        const action = getInitList();
         store.dispatch(action);
+
+        
+        //使用redux-thunk
+        // const action = getTodoList();
+        // store.dispatch(action);
+
         // axios.get('/list.json').then((res) => {
         //     const data = res.data;
         //     const action = initListAction(data);
