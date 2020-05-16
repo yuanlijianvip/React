@@ -1,27 +1,54 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class TodoList extends Component {
+const TodoList = (props) => {
+    const { inputValue, changeInputValue,  handleClick, list} = props;
 
-    render() {
-        return (
+    return (
+        <div>
             <div>
-                <div>
-                    <input value={this.props.inputValue} onChange={this.props.changeInputValue}/>
-                    <button>提交</button>
-                </div>
-                <ul>
-                    <li>111</li>
-                </ul>
+                <input value={inputValue} onChange={changeInputValue}/>
+                <button onClick={handleClick}>提交</button>
             </div>
-        )
-    }
-
+            <ul>
+                {
+                    list.map((item, index) => {
+                        return <li key={index}>{item}</li>
+                    })
+                }
+            </ul>
+        </div>
+    )
 }
+
+// class TodoList extends Component {
+
+//     render() {
+//         const { inputValue, changeInputValue,  handleClick, list} = this.props;
+
+//         return (
+//             <div>
+//                 <div>
+//                     <input value={inputValue} onChange={changeInputValue}/>
+//                     <button onClick={handleClick}>提交</button>
+//                 </div>
+//                 <ul>
+//                     {
+//                         list.map((item, index) => {
+//                             return <li key={index}>{item}</li>
+//                         })
+//                     }
+//                 </ul>
+//             </div>
+//         )
+//     }
+
+// }
 
 const mapStateToProps = (state) => {
     return {
         inputValue: state.inputValue,
+        list: state.list
     }
 }
 
@@ -32,6 +59,13 @@ const mapDispatchToProps = (dispatch) => {
             const action = {
                 type: 'change_input_value',
                 value: e.target.value
+            }
+            dispatch(action);
+        },
+
+        handleClick() {
+            const action = {
+                type: 'add_item'
             }
             dispatch(action);
         }
